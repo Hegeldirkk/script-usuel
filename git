@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+echo "#######################################################################"
+echo "#                                                                     #"
+echo "#   Bash script Automation (git command)                              #"
+echo "#                                                                     #"
+echo "#   commands to push your source code in your repository              #"
+echo "#   (run: ./git)                                                      #"
+echo "#                                                                     #"
+echo "#######################################################################"
+
+git add .
+
+if [ -z $GITCOMMIT ]
+then
+	echo " commit is empty\n"
+	echo "write some message:"
+	read commit
+	while [ -z "$commit" ]
+	do
+	       echo "please write some message: "
+	       read commit
+       done
+       export GITCOMMIT="script git writting - $commit"
+fi
+
+git commit -m "$GITCOMMIT"
+git push
+
+echo "code success | https://dirkk.ci"

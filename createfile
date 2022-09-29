@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+echo "#######################################################################"
+echo "#                                                                     #"
+echo "#   Bash script Automation (http://dirkk.ci)                          #"
+echo "#                                                                     #"
+echo "#   crée des fichiers scripts et ajoute l'entête adéquat              #"
+echo "#   (help run: ./createfile nomdufichier)                             #"
+echo "#   exemple: ./createfile text.py                                     #"
+echo "#                                                                     #"
+echo "#######################################################################"
+
+
+#declaration de variable
+#entête d'environnement
+envHead="#!/usr/bin/"
+
+#Tableau contenant les différentes extensions
+tabExt=( .py .js .sh .c )
+
+#Tableau contenant l'entête adéquat à rajouter
+tabHead=( [0]="#!/usr/bin/python3" [1]="node" [2]="#!/bin/bash" [3]="#include <stdio.h>" [4]="bash" )
+
+#fichier recuperer dans le terminal
+fichier=$1
+
+#extraction de l'extension du fichier
+extension=${fichier: -3}
+
+if [[ $extension == .* ]]
+then
+	case "$extension" in
+		# cree le fichier script et ajoute l'entête adéquat
+		# ajoute des privileges au fichier
+		${tabExt[0]} )
+			touch $fichier && echo "${tabHead[0]}" > $fichier
+			chmod a+x $fichier
+			;;
+
+		${tabExt[1]} )
+			touch $fichier && echo "$envHead${tabHead[1]}" > $fichier
+			chmod a+x $fichier
+			;;
+
+		${tabExt[2]} )
+			touch $fichier && echo "${tabHead[2]}" > $fichier
+			chmod a+x $fichier
+			;;
+	esac
+else
+	extension=${fichier: -2}
+	if [[ $extension == ${tabExt[3]} ]]
+	then
+		echo ${tabHead[3]} > $fichier
+	else
+		echo "${envHead}env ${tabHead[4]}" > $fichier
+	fi
+fi
+echo
+echo "$fichier"
+cat $fichier
+
+echo
+
+echo "- Site Web: https://dirkk.ci"
+echo "- github: https://github.com/Hegeldirkk"
+echo "- email: ikaryryann@dirkk.ci"
+echo "- meduim: https://medium.com/@idiabakate"
+
+exit 0
