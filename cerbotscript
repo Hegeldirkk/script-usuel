@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# install certbot to configure ssl in my balancing server
+sudo apt update
+sudo apt install snapd
+sudo snap install core; sudo snap refresh core
+sudo apt-get remove certbot
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
+sudo service haproxy stop
+sudo certbot certonly --standalone
+sudo chown ubuntu -R /etc/letsencrypt
+sudo haproxy -f /etc/haproxy/haproxy.cfg -db
